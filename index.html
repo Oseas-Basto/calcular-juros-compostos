@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Juros Compostos - Simulador Online Grátis</title>
+    <meta name="description" content="Simule seus investimentos com a nossa calculadora de juros compostos. Descubra o poder dos juros sobre juros para alcançar sua liberdade financeira.">
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
+        header { background: var(--dark); color: white; text-align: center; padding: 20px; }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px; }
+        
+        /* Espaços para Anúncios */
+        .ad-space { background: #e9ecef; border: 2px dashed #ced4da; text-align: center; padding: 15px; margin: 15px 0; color: #6c757d; font-size: 12px; }
+
+        /* Simulador */
+        .simulator-box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+        button { width: 100%; background: var(--primary); color: white; padding: 12px; border: none; border-radius: 4px; font-size: 18px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #27ae60; }
+        
+        /* Resultados */
+        .result-box { display: none; margin-top: 25px; padding: 20px; background: #e8f8f5; border-left: 5px solid var(--primary); border-radius: 4px; }
+        .result-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 16px; }
+        .result-item.total { font-size: 20px; font-weight: bold; color: #16a085; border-top: 1px solid #bdc3c7; padding-top: 10px; }
+
+        /* Conteúdo de SEO */
+        .seo-content { margin-top: 40px; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .seo-content h2 { margin-top: 20px; color: var(--dark); }
+        .seo-content p { margin-bottom: 15px; text-align: justify; }
+        
+        /* Rodapé Legais */
+        footer { text-align: center; margin-top: 40px; padding: 20px; font-size: 14px; border-top: 1px solid #ddd; }
+        footer a { color: var(--dark); text-decoration: none; margin: 0 10px; }
+        footer a:hover { text-decoration: underline; }
+		
+		
+		<!-- Cole esta linha logo antes do fechamento da tag </head> -->
+	<script src="https://jsdelivr.net"></script>
+	
+	
+	/* Estilos para os Modais Legais */
+	.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; }
+	.modal-content { background: white; max-width: 600px; margin: 10% auto; padding: 25px; border-radius: 8px; max-height: 70vh; overflow-y: auto; position: relative; }
+	.close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #aaa; }
+	.close-btn:hover { color: black; }
+	.modal h3 { margin-bottom: 15px; color: var(--dark); }
+
+		
+    </style>
+	
+	
+
+	
+</head>
+<body>
+
+    <header>
+        <h1>Calculadora de Juros Compostos</h1>
+        <p>Planeje seu futuro e veja seu dinheiro render</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- ANÚNCIO DO TOPO -->
+        <div class="ad-space">
+            <!-- Cole seu código do Google AdSense aqui quando for aprovado -->
+            [ESPAÇO PARA ANÚNCIO ADSENSE - TOPO]
+        </div>
+
+        <!-- FORMULÁRIO DO SIMULADOR -->
+        <div class="simulator-box">
+            <div class="form-group">
+                <label for="initial">Valor Inicial (R$):</label>
+                <input type="number" id="initial" placeholder="Ex: 1000" value="1000">
+            </div>
+            <div class="form-group">
+                <label for="monthly">Aporte Mensal (R$):</label>
+                <input type="number" id="monthly" placeholder="Ex: 200" value="200">
+            </div>
+            <div class="form-group">
+                <div style="display: flex; gap: 10px;">
+                    <div style="flex: 2;">
+                        <label for="rate">Taxa de Juros (%):</label>
+                        <input type="number" id="rate" step="0.01" placeholder="Ex: 12" value="12">
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="rateType">Período:</label>
+                        <select id="rateType">
+                            <option value="annual" selected>Anual</option>
+                            <option value="monthly">Mensal</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div style="display: flex; gap: 10px;">
+                    <div style="flex: 2;">
+                        <label for="period">Tempo:</label>
+                        <input type="number" id="period" placeholder="Ex: 5" value="5">
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="periodType">Unidade:</label>
+                        <select id="periodType">
+                            <option value="years" selected>Anos</option>
+                            <option value="months">Meses</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button onclick="calculateInterest()">Calcular Rendimento</button>
+
+            <!-- RESULTADOS -->
+            <div id="result" class="result-box">
+                <div class="result-item">
+                    <span>Valor Total Investido:</span>
+                    <span id="resInvested">R$ 0,00</span>
+                </div>
+                <div class="result-item">
+                    <span>Total em Juros Ganhos:</span>
+                    <span id="resInterest">R$ 0,00</span>
+                </div>
+                <div class="result-item total">
+                    <span>Montante Total Bruto:</span>
+                    <span id="resTotal">R$ 0,00</span>
+                </div>
+            </div>
+			
+			<!-- Cole este bloco dentro da div "simulator-box", logo abaixo do fechamento da div id="result" -->
+			<div id="chartContainer" style="display: none; margin-top: 25px; max-height: 350px;">
+				<canvas id="resultsChart"></canvas>
+			</div>
+
+			
+        </div>
+
+        <!-- ANÚNCIO DO MEIO -->
+        <div class="ad-space">
+            [ESPAÇO PARA ANÚNCIO ADSENSE - MEIO CONTEÚDO]
+        </div>
+
+        <!-- ARTIGO DE TEXTO PARA APROVAÇÃO E SEO -->
+        <article class="seo-content">
+            <h2>O que são Juros Compostos?</h2>
+            <p>Os juros compostos são a prática de aplicar juros sobre o montante acumulado, e não apenas sobre o valor inicial investido. É o famoso conceito de "juros sobre juros", amplamente utilizado no mercado financeiro para a valorização de capital no longo prazo.</p>
+            
+            <h2>Como funciona o cálculo?</h2>
+            <p>Diferente dos juros simples, onde o rendimento é fixo baseado apenas no aporte inicial, a mecânica composta reinveste os lucros de forma contínua. À medida que o tempo passa, a base de cálculo cresce de forma exponencial, acelerando o acúmulo de riqueza.</p>
+            
+            <h2>Como usar esta calculadora de juros compostos?</h2>
+            <p>Nossa ferramenta foi desenvolvida de maneira intuitiva para te ajudar a projetar sua independência financeira. Basta preencher o valor que você tem hoje para começar, definir seus aportes mensais recorrentes, estipular a taxa de rentabilidade anual ou mensal estimada e selecionar o período total de tempo que pretende deixar o dinheiro rendendo.</p>
+        </article>
+
+    </div>
+
+    
+
+    <!-- LÓGICA DO SIMULADOR -->
+    <script>
+        let myChart = null; // Variável global para controlar o gráfico
+
+		function calculateInterest() {
+			let initial = parseFloat(document.getElementById('initial').value) || 0;
+			let monthly = parseFloat(document.getElementById('monthly').value) || 0;
+			let rate = parseFloat(document.getElementById('rate').value) || 0;
+			let rateType = document.getElementById('rateType').value;
+			let period = parseInt(document.getElementById('period').value) || 0;
+			let periodType = document.getElementById('periodType').value;
+
+			let totalMonths = periodType === 'years' ? period * 12 : period;
+
+			let monthlyRate = 0;
+			if (rateType === 'annual') {
+				monthlyRate = Math.pow((1 + (rate / 100)), (1 / 12)) - 1;
+			} else {
+				monthlyRate = rate / 100;
+			}
+
+			let totalValue = initial;
+			let totalInvested = initial;
+			
+			// Arrays para alimentar o gráfico histórico
+			let labels = [];
+			let dataInvested = [];
+			let dataTotal = [];
+
+			// Adiciona o ponto inicial (Mês 0)
+			labels.push("Início");
+			dataInvested.push(initial);
+			dataTotal.push(initial);
+
+			for (let i = 1; i <= totalMonths; i++) {
+				totalValue = totalValue * (1 + monthlyRate);
+				totalValue += monthly;
+				totalInvested += monthly;
+
+				// Guarda dados para o gráfico (mostra todos os meses se for curto, ou pula para não poluir)
+				if (totalMonths <= 24 || i % Math.ceil(totalMonths / 12) === 0 || i === totalMonths) {
+					labels.push(periodType === 'years' ? `Mês ${i}` : `Mês ${i}`);
+					dataInvested.push(Math.round(totalInvested));
+					dataTotal.push(Math.round(totalValue));
+				}
+			}
+
+			let totalInterest = totalValue - totalInvested;
+			const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+			document.getElementById('resInvested').innerText = formatter.format(totalInvested);
+			document.getElementById('resInterest').innerText = formatter.format(totalInterest);
+			document.getElementById('resTotal').innerText = formatter.format(totalValue);
+			
+			document.getElementById('result').style.display = 'block';
+			document.getElementById('chartContainer').style.display = 'block';
+
+			// Renderização ou Atualização do Gráfico
+			const ctx = document.getElementById('resultsChart').getContext('2d');
+			
+			if (myChart) {
+				myChart.destroy(); // Destrói o gráfico anterior para não sobrepor dados
+			}
+
+			myChart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: labels,
+					datasets: [
+						{
+							label: 'Total Investido (R$)',
+							data: dataInvested,
+							backgroundColor: '#bdc3c7',
+							borderWidth: 1
+						},
+						{
+							label: 'Montante Acumulado (R$)',
+							data: dataTotal,
+							backgroundColor: '#2ecc71',
+							borderWidth: 1
+						}
+					]
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false,
+					scales: {
+						y: { beginAtZero: true }
+					}
+				}
+			});
+		}
+		
+		
+		function openModal(modalId) {
+			document.getElementById(modalId).style.display = 'block';
+		}
+		function closeModal(modalId) {
+			document.getElementById(modalId).style.display = 'none';
+		}
+		// Fecha o modal se clicar fora dele
+		window.onclick = function(event) {
+			if (event.target.className === 'modal') {
+				event.target.style.display = 'none';
+			}
+		}
+
+
+    </script>
+	
+	
+	<!-- Modal de Política de Privacidade -->
+	<div id="privacyModal" class="modal">
+		<div class="modal-content">
+			<span class="close-btn" onclick="closeModal('privacyModal')">&times;</span>
+			<h3>Política de Privacidade</h3>
+			<p>A sua privacidade é de extrema importância para nós. Esta política descreve como coletamos e usamos as suas informações.</p>
+			<br>
+			<h4>1. Coleta de Informações</h4>
+			<p>Este simulador não armazena, coleta ou compartilha nenhum dado financeiro digitado em nossos formulários. Os cálculos são feitos localmente no seu próprio navegador.</p>
+			<br>
+			<h4>2. Cookies e Anúncios (Google AdSense)</h4>
+			<p>Utilizamos fornecedores terceiros, incluindo o Google, que usam cookies para veicular anúncios com base em visitas anteriores do usuário a este site ou a outros sites.</p>
+			<p>Com o uso do cookie da DoubleClick, o Google e os parceiros dele podem veicular anúncios para os usuários com base nas visitas feitas a seus sites e/ou a outros sites na Internet.</p>
+			<p>Você pode desativar a publicidade personalizada acessando as Configurações de anúncios do Google.</p>
+		</div>
+	</div>
+
+	<!-- Modal de Termos de Uso -->
+	<div id="termsModal" class="modal">
+		<div class="modal-content">
+			<span class="close-btn" onclick="closeModal('termsModal')">&times;</span>
+			<h3>Termos de Uso</h3>
+			<p>Ao acessar e utilizar este site, você concorda com os seguintes termos e condições:</p>
+			<br>
+			<h4>1. Natureza Informativa</h4>
+			<p>Os cálculos e simulações gerados por esta ferramenta servem apenas como referência informativa e educativa baseada em fórmulas matemáticas puras. Eles não constituem aconselhamento financeiro oficial, promessa de rentabilidade ou recomendação de investimentos.</p>
+			<br>
+			<h4>2. Limitação de Responsabilidade</h4>
+			<p>Não nos responsabilizamos por quaisquer decisões financeiras tomadas com base nos resultados apresentados por este simulador. O mercado financeiro real está sujeito a oscilações, taxas extras e impostos que não estão previstos nesta simulação padrão.</p>
+		</div>
+	</div>
+
+	
+	
+</body>
+</html>
