@@ -26,6 +26,13 @@
             --dark: #2c3e50;
             --light: #f8f9fa;
         }
+		
+		html {
+			scroll-behavior: smooth;
+		}
+
+
+
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--light); color: var(--dark); line-height: 1.6; }
         header { background: var(--dark); color: white; text-align: center; padding: 20px; }
@@ -33,20 +40,20 @@
         
         /* Espaços para Anúncios */
         .ad-space { 
-			background: #f1f2f6; 
-			border: 1px dashed #ced4da; 
-			text-align: center; 
-			padding: 10px; 
-			margin: 20px 0; 
-			color: #7f8c8d; 
-			font-size: 11px; 
-			min-height: 90px; 
-			max-width: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			border-radius: 4px;
-		}
+		background: #f1f2f6; 
+		border: 1px dashed #ced4da; 
+		text-align: center; 
+		padding: 10px; 
+		margin: 20px 0; 
+		color: #7f8c8d; 
+		font-size: 11px; 
+		min-height: 90px; 
+		max-width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 4px;
+	}
 
 
         /* Simulador */
@@ -177,17 +184,17 @@
             
         </div>
 
-        <!-- ARTIGO DE TEXTO PARA APROVAÇÃO E SEO -->
-        <article class="seo-content">
-            <h2>O que são Juros Compostos?</h2>
-            <p>Os juros compostos são a prática de aplicar juros sobre o montante acumulado, e não apenas sobre o valor inicial investido. É o famoso conceito de "juros sobre juros", amplamente utilizado no mercado financeiro para a valorização de capital no longo prazo.</p>
-            
-            <h2>Como funciona o cálculo?</h2>
-            <p>Diferente dos juros simples, onde o rendimento é fixo baseado apenas no aporte inicial, a mecânica composta reinveste os lucros de forma contínua. À medida que o tempo passa, a base de cálculo cresce de forma exponencial, acelerando o acúmulo de riqueza.</p>
-            
-            <h2>Como usar esta calculadora de juros compostos?</h2>
-            <p>Nossa ferramenta foi desenvolvida de maneira intuitiva para te ajudar a projetar sua independência financeira. Basta preencher o valor que você tem hoje para começar, definir seus aportes mensais recorrentes, estipular a taxa de rentabilidade anual ou mensal estimada e selecionar o período total de tempo que pretende deixar o dinheiro rendendo.</p>
-        </article>
+         
+
+		<footer>
+			<p>&copy; 2026 Simulador de Juros Compostos. Todos os direitos reservados.</p>
+			<p>
+				<!-- Links apontando para os IDs com rolagem suave -->
+				<a href="#privacyModal">Política de Privacidade</a> | 
+				<a href="#termsModal">Termos de Uso</a>
+			</p>
+		</footer>
+
 
     </div>
 
@@ -286,19 +293,7 @@
 			});
 		}
 		
-		
-		function openModal(modalId) {
-			document.getElementById(modalId).style.display = 'block';
-		}
-		function closeModal(modalId) {
-			document.getElementById(modalId).style.display = 'none';
-		}
-		// Fecha o modal se clicar fora dele
-		window.onclick = function(event) {
-			if (event.target.className === 'modal') {
-				event.target.style.display = 'none';
-			}
-		}
+	
 
 
     </script>
